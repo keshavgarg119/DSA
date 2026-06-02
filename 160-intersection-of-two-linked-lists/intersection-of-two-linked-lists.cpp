@@ -12,16 +12,10 @@ public:
         ListNode* tempA = headA;
         ListNode* tempB = headB;
         while(tempA!=tempB) {
-            /*if(tempA == nullptr) {
-                tempA = headB
-            } else {
-                tempA = tempA->next;
-            }*/
-            tempA = (tempA==nullptr) ? headB : tempA->next;
-            tempB = (tempB==nullptr) ? headA : tempB->next;
+            tempA = (tempA == nullptr) ? headB : tempA->next;
+            tempB = (tempB == nullptr) ? headA : tempB->next;
         }
 
         return tempA;
-
     }
 };
