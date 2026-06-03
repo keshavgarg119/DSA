@@ -14,11 +14,10 @@ public:
         ListNode* temp1 = list1;
         ListNode* temp2 = list2;
 
-        ListNode* dummyNode = new ListNode(-1);
+        ListNode* dummyNode=  new ListNode(-1);
         ListNode* temp = dummyNode;
-
-        while(temp1 != nullptr  && temp2 != nullptr) {
-            if(temp1->val <= temp2->val) {
+        while(temp1!=nullptr && temp2!=nullptr) {
+            if(temp1->val<=temp2->val) {
                 temp->next = temp1;
                 temp1 = temp1->next;
             }
@@ -29,11 +28,16 @@ public:
             temp = temp->next;
         }
 
-        if(temp1 != nullptr) {
+        while(temp1 != nullptr) {
             temp->next = temp1;
+            temp1 = temp1->next;
+            temp = temp->next;
         }
-        else {
+
+        while(temp2 != nullptr) {
             temp->next = temp2;
+            temp2 = temp2->next;
+            temp = temp->next;
         }
 
         return dummyNode->next;
