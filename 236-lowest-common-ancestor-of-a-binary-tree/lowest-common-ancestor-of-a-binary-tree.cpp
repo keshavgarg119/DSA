@@ -10,7 +10,6 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-
         if(root==nullptr || root==p || root==q) {
             return root;
         }
@@ -19,13 +18,14 @@ public:
         TreeNode* right = lowestCommonAncestor(root->right, p, q);
 
         if(left==nullptr) {
-            return right;
+            return right; //if we don't find either p or q in the left
         }
         else if(right==nullptr) {
             return left;
         }
-        else { // if both right and left are null
-            return root;
+        else {
+            return root; //if we found p or q in both sides
         }
+        
     }
 };
