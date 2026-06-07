@@ -20,7 +20,7 @@ class Solution {
 public:
     Node* connect(Node* root) {
         if(root==nullptr) return nullptr;
-
+        /*
         queue<Node*>q;
 
         q.push(root);
@@ -43,6 +43,26 @@ public:
                 }
 
             } 
+        }
+
+        return root;*/
+
+        Node* levelStart = root;
+
+        while(levelStart->left!=nullptr) {
+            Node* curr = levelStart;
+
+            while(curr!=nullptr) {
+                curr->left->next = curr->right;
+
+                if(curr->next != nullptr) {
+                    curr->right->next = curr->next->left;
+                }
+
+                curr = curr->next;
+            }
+
+            levelStart = levelStart->left;
         }
 
         return root;
