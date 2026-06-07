@@ -11,38 +11,39 @@
  */
 class Solution {
 public:
+    void inorder(TreeNode* root, vector<int> &ans) {
+        if(root==nullptr) return;
+
+        inorder(root->left, ans);
+        ans.push_back(root->val);
+        inorder(root->right, ans);
+    }
+
     bool findTarget(TreeNode* root, int k) {
-        vector<int>arr;
-        inorder(root, arr);
+        vector<int>ans;
+        
+        inorder(root,ans);
 
-        int l = 0;
-        int r = arr.size()-1;
+        int low = 0;
+        int high = ans.size()-1;
 
-        while(l<r) {
+        int sum = 0;
 
-            int sum = arr[l]+arr[r];
+        while(low < high) {
+            int sum = ans[low] + ans[high];
 
-            if(sum==k) {
+            if(sum == k) {
                 return true;
             }
-            else if(sum<k) {
-                l++;
+            else if(sum > k) {
+                high--;
             }
             else {
-                r--;
+                low++;
             }
-
         }
 
         return false;
-    }
 
-    void inorder(TreeNode* root, vector<int> &arr) {
-
-        if(!root) return;
-
-        inorder(root->left, arr);
-        arr.push_back(root->val);
-        inorder(root->right, arr);
     }
 };
