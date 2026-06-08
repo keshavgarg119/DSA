@@ -5,13 +5,13 @@ public:
         int m = matrix[0].size();
         int low = 0;
         int high = n*m-1;
-        
+
         while(low<=high) {
             int mid = low + (high-low)/2;
-            int col = mid%m;
             int row = mid/m;
+            int col = mid%m;
 
-            if(matrix[row][col] == target) {
+            if(matrix[row][col]==target) {
                 return true;
             }
             else if(matrix[row][col] < target) {
@@ -21,7 +21,7 @@ public:
                 high = mid-1;
             }
         }
-        
+
         return false;
     }
 };
