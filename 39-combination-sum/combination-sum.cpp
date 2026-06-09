@@ -1,30 +1,25 @@
 class Solution {
 public:
-
-    void findCombination(int index, int target, vector<int>& arr, vector<vector<int>>& ans, vector<int>& ds) {
-
-        // base case
-        if(index == arr.size()) {
-            if(target == 0) {
-                ans.push_back(ds);
+    void findCombinations(int i, vector<int>& candidates, int target, vector<int>& subset, vector<vector<int>>& result) {
+        if(i==candidates.size()) {
+            if(target==0) {
+                result.push_back(subset);
             }
             return;
         }
-        
-        // checking for all the other combinations
-        if(target >= arr[index]) {
-            ds.push_back(arr[index]);
-            findCombination(index, target-arr[index], arr, ans, ds);
-            ds.pop_back();
+        if(target >= candidates[i]) {
+            subset.push_back(candidates[i]);
+            findCombinations(i, candidates, target-candidates[i], subset, result);
+            subset.pop_back();
         }
-        findCombination(index+1, target, arr, ans, ds);
+        findCombinations(i+1, candidates, target, subset, result);
 
     }
-
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> ans;
-        vector<int>ds;
-        findCombination(0,target,candidates,ans,ds);
-        return ans;
+        vector<int>subset;
+        vector<vector<int>>result;
+
+        findCombinations(0, candidates, target, subset, result);
+        return result;
     }
 };
