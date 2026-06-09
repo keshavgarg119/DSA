@@ -1,36 +1,37 @@
 class Solution {
 public:
-    int countD(vector<int>& weights, int cap) {
+    
+    int countDay(vector<int>& weights, int capacity) {
         int days = 1, load = 0;
 
         for(int i=0; i<weights.size(); i++) {
-            if(weights[i]+load > cap) {
-                days++;
-                load = weights[i];
+            if(weights[i]+load <= capacity) {
+                load += weights[i];
             }
             else {
-                load += weights[i];
+                days++;
+                load = weights[i];
             }
         }
 
         return days;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int n = weights.size();
-        int l  = *max_element(weights.begin(), weights.end());
-        int h = accumulate(weights.begin(), weights.end(), 0);
+        int low = *max_element(weights.begin(), weights.end());
+        int high = accumulate(weights.begin(), weights.end(), 0);
 
-        while(l<=h) {
-            int mid = l + (h-l)/2;
-            int countDays = countD(weights,mid);
-            if(countDays<=days) {
-                h = mid-1;
+        while(low<=high) {
+            int mid = low + (high-low)/2;
+            int countDays = countDay(weights, mid);
+
+            if(countDays <= days) {
+                high = mid-1;
             }
             else {
-                l = mid+1;
+                low = mid+1;
             }
         }
 
-        return l;
+        return low;
     }
 };
