@@ -1,26 +1,25 @@
 class Solution {
 public:
+    void printSSwithNoDup(int index, vector<int> &nums, vector<int>& subset, vector<vector<int>>& result) {
+        result.push_back(subset);
 
-    void findSubsets(int index, vector<int>&arr, vector<int> &ds, vector<vector<int>> &ans) {
-        
-        ans.push_back(ds);
+        for(int i=index; i<nums.size(); i++) {
+            if(i!=index && nums[i]==nums[i-1]) {
+                continue;
+            }
+            subset.push_back(nums[i]);
+            printSSwithNoDup(i+1, nums, subset, result);
+            subset.pop_back();
 
-        for(int i=index; i<arr.size(); i++) {
-            if(i!=index && arr[i]==arr[i-1]) continue; // skipping the duplicates
-            ds.push_back(arr[i]);
-            findSubsets(i+1,arr,ds,ans);
-            ds.pop_back();
         }
-
     }
-
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        
-        vector<int> ds;
-        vector<vector<int>> ans;
+        vector<int>subset;
+        vector<vector<int>>result;
         sort(nums.begin(), nums.end());
-        findSubsets(0,nums,ds,ans);
-        return ans;
+        
+        printSSwithNoDup(0, nums, subset, result);
 
+        return result;
     }
 };
