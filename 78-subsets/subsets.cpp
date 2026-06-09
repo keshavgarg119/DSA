@@ -1,31 +1,23 @@
 class Solution {
 public:
-    
-    void printSubsets(int index, vector<int>& arr, vector<vector<int>> &result, vector<int> &current) {
-
-        // base case
-        if(index==arr.size()) {
-            result.push_back(current);
+    void printSubSets(int index, vector<int>& nums, vector<int> &curr, vector<vector<int>>& result) {
+        if(index==nums.size()) {
+            result.push_back(curr);
             return;
         }
 
-        // recursive calls
-        // including the element
-        current.push_back(arr[index]);
-        printSubsets(index+1, arr, result, current);
+        curr.push_back(nums[index]);
+        printSubSets(index+1, nums, curr, result);
 
-        // removing the element
-        current.pop_back();
-        printSubsets(index+1, arr, result, current);
-
+        curr.pop_back();
+        printSubSets(index+1, nums, curr, result);
     }
-    
     vector<vector<int>> subsets(vector<int>& nums) {
-        
-        vector<vector<int>> result;
-        vector<int> current;
-        printSubsets(0,nums,result,current);
-        return result;
+        vector<int>curr;
+        vector<vector<int>>result;
 
+        printSubSets(0, nums, curr, result);
+
+        return result; 
     }
 };
