@@ -1,39 +1,64 @@
 class Solution {
 public:
-    void solve(int col, vector<string>&board, vector<int> &left,vector<int> &upperDiagonal, vector<int> &lowerDiagonal, vector<vector<string>> &ans, int n ) {
+    bool isSafe(int row, int col, vector<string>& board, int n) {
+        int dupRow = row;
+        int dupCol = col;
 
+        //check diagonal
+        while(row>=0 && col>=0) {
+            if(board[row][col]=='Q') {
+                return false;
+            }
+            row--;
+            col--;
+        }
+
+        row = dupRow;
+        col = dupCol;
+        //check col
+        while(col>=0) {
+            if(board[row][col]=='Q') return false;
+            col--;
+        }
+
+        row = dupRow;
+        col = dupCol;
+        //check row
+        while(row<n && col>=0) {
+            if(board[row][col]=='Q') return false;
+            row++;
+            col--;
+        }
+
+        return true;
+    }
+    void solve(int col, int n, vector<string>& board, vector<vector<string>>& result) {
         if(col==n) {
-            ans.push_back(board);
+            result.push_back(board);
             return;
         }
 
-        for(int row = 0; row<n; row++) {
-            if(left[row]==0 && upperDiagonal[row+col]==0 && lowerDiagonal[n-1+col-row]==0) {
+        for(int row=0; row<n; row++) {
+            if(isSafe(row, col, board, n)) {
                 board[row][col] = 'Q';
-                left[row] = 1;
-                upperDiagonal[row+col] = 1;
-                lowerDiagonal[n-1+col-row] = 1;
-                solve(col+1,board,left,upperDiagonal,lowerDiagonal,ans,n);
+                solve(col+1, n, board, result);
                 board[row][col] = '.';
-                left[row] = 0;
-                upperDiagonal[row+col] = 0;
-                lowerDiagonal[n-1+col-row] = 0;
             }
         }
+
     }
-
-
     vector<vector<string>> solveNQueens(int n) {
+        vector<string>board(n);
+        vector<vector<string>>result;
 
-        vector<vector<string>> ans;
-        vector<string> board(n);
-        string s(n,'.');
+        string s(n, '.');
+
         for(int i=0; i<n; i++) {
-            board[i]=s;
+            board[i] = s;
         }
 
-        vector<int>left(n,0), upperDiagonal(2*n-1,0), lowerDiagonal(2*n-1,0);
-        solve(0,board,left,upperDiagonal,lowerDiagonal,ans,n);
-        return ans;
+        solve(0, n, board, result);
+
+        return result;
     }
 };
