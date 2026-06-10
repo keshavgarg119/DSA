@@ -16,7 +16,8 @@ public:
             };
             bucket[i] -= nums[index];
 
-            if(bucket[i]==0) break;
+            if(bucket[i]==0) break; // avoid the bucket that is not used
+            // Avoid duplicate work for identical empty buckets
         }
 
         return false;
