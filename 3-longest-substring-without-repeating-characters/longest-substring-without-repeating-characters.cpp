@@ -4,24 +4,21 @@ public:
         int n = s.size();
 
         int hashLen = 256;
-        vector<int>hash(hashLen,-1);
+        vector<int>hash(hashLen, -1);
 
-        
-        
-        int l=0 ,r=0, maxLen=0;
+        int maxlen = 0, l=0, r=0;
 
         while(r<n) {
-            if(hash[s[r]] != -1) {
-                l = max(hash[s[r]] + 1, l);
+            if(hash[s[r]]!=-1) {
+                l = max(hash[s[r]]+1, l);
             }
 
-            int len = r-l+1;
-            maxLen = max(maxLen, len);
-
+            maxlen = max(maxlen, r-l+1);
+            
             hash[s[r]] = r;
             r++;
         }
 
-        return maxLen;
+        return maxlen;
     }
 };
