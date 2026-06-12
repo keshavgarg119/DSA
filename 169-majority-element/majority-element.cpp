@@ -1,31 +1,15 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        int el = 0;
-        int count = 0;
-        for(int i=0; i<nums.size(); i++) {
-            if(count == 0) {
-                el = nums[i];
-                count = 1;
-            }
-            else if(nums[i] == el) {
-                count++;
-            }
-            else {
-                count--;
-            }
+        unordered_map<int, int>mp;
+        int n = nums.size();
+
+        for(int i: nums) {
+            mp[i]++;
+
+            if(mp[i]>n/2) return i; 
         }
 
-        // we got the element and count how many times it appears
-        int count1 = 0;
-        for(int i=0; i<nums.size(); i++) {
-            if(nums[i] == el){
-                count1++;
-            }
-        }
-        if(count1 > nums.size()/2) {
-            return el;
-        }
         return -1;
     }
 };
