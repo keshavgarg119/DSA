@@ -31,13 +31,14 @@ public:
         bool firstrow = false;
         bool firstcol = false;
 
+        //check first col
         for(int i=0; i<m; i++) {
             if(matrix[i][0]==0) {
                 firstcol = true;
                 break;
             }
         }
-
+        //check first row
         for(int j=0; j<n; j++) {
             if(matrix[0][j]==0) {
                 firstrow = true;
@@ -45,7 +46,7 @@ public:
             }
         }
 
-        
+        //mark row and column
         for(int i=1; i<m; i++) {
             for(int j=1; j<n; j++) {
                 if(matrix[i][j]==0) {
@@ -54,7 +55,7 @@ public:
                 }
             }
         }
-
+        //set zeros using markers
         for(int i=1; i<m; i++) {
             for(int j=1; j<n; j++) {
                 if(matrix[i][0]==0 || matrix[0][j]==0) {
@@ -62,13 +63,13 @@ public:
                 }
             }
         }
-
+        //handle first row
         if(firstrow) {
             for(int j=0; j<n; j++) {
                 matrix[0][j] = 0;
             }
         }
-
+        //handle first col
         if(firstcol) {
             for(int i=0; i<m; i++) {
                 matrix[i][0] = 0;
