@@ -45,7 +45,7 @@ public:
             }
         }
 
-        if(!pq.empty()) {
+        if(pq.size()==1) {
             ans += pq.top().second;
         }
 
