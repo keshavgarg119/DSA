@@ -18,19 +18,32 @@ public:
         int n = nums.size();
 
         // vector<vector<int>>dp(n+1, vector<int>(n+1,0));
-        vector<int>cur(n+1,0), next(n+1,0);
+        // vector<int>cur(n+1,0), next(n+1,0);
 
-        for(int i=n-1; i>=0; i--) {
-            for(int prev=i-1; prev>=-1; prev--) {
-                int length = next[prev+1];
-                if(prev==-1 || nums[i] > nums[prev]) {
-                    length = max(length, 1 + next[i+1]);
+        // for(int i=n-1; i>=0; i--) {
+        //     for(int prev=i-1; prev>=-1; prev--) {
+        //         int length = next[prev+1];
+        //         if(prev==-1 || nums[i] > nums[prev]) {
+        //             length = max(length, 1 + next[i+1]);
+        //         }
+        //         cur[prev+1] = length;
+        //     }
+        //     next = cur;
+        // }
+
+        // return next[0];
+
+        vector<int>dp(n,1);
+        int maxi = 0;
+        for(int i=0; i<n; i++) {
+            for(int prev = 0; prev<i; prev++) {
+                if(nums[prev] < nums[i]) {
+                    dp[i] = max(dp[i], 1+dp[prev]);
                 }
-                cur[prev+1] = length;
             }
-            next = cur;
+            maxi = max(maxi, dp[i]);
         }
 
-        return next[0];
+        return maxi;
     }
 };
