@@ -21,26 +21,28 @@ public:
         if(sum%2!=0) return false;
         int k = sum/2;
 
-        vector<vector<bool>>dp(n+1, vector<bool>(k+1,false));
+        // vector<vector<bool>>dp(n+1, vector<bool>(k+1,false));
+        vector<bool>cur(k+1, false);
+        vector<bool>prev(k+1, false);
 
         // for this code we write if(target==0) return true;
-        for(int i=0; i<=n; i++) {
-            dp[i][0] = true;
-        }
+        prev[0] = true;
 
         for(int index=1; index<=n; index++) {
+            cur[0] = true;
             for(int target=1; target<=k; target++) {
                 bool take = false;
-                bool notTake = dp[index-1][target];
+                bool notTake = prev[target];
 
                 if(target >= nums[index-1]) {
-                    take = dp[index-1][target-nums[index-1]];
+                    take = prev[target-nums[index-1]];
                 }
 
-                dp[index][target] = take || notTake;
+                cur[target] = take || notTake;
             }   
+            prev = cur;
         }
 
-        return dp[n][k];
+        return prev[k];
     }
 };
