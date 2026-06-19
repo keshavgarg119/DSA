@@ -1,31 +1,40 @@
 class Solution {
 public:
-    unordered_set<string>st;
-    vector<int>dp;
+    // unordered_set<string>st;
+    // vector<int>dp;
 
-    bool solve(int start, string &s) {
-        if(start==s.length()) return true;
+    // bool solve(int start, string &s) {
+    //     if(start==s.length()) return true;
 
-        if(dp[start]!=-1) return dp[start];
+    //     if(dp[start]!=-1) return dp[start];
 
-        string curr = "";
+    //     string curr = "";
 
-        for(int end = start; end<s.length(); end++) {
-            curr += s[end];
+    //     for(int end = start; end<s.length(); end++) {
+    //         curr += s[end];
 
-            if(st.count(curr) && solve(end+1, s)) { // found  in dictionory, then recurse
-                return dp[start] = true;
-            }
-        }
+    //         if(st.count(curr) && solve(end+1, s)) { // found  in dictionory, then recurse
+    //             return dp[start] = true;
+    //         }
+    //     }
 
-        return dp[start] = false;
-    }
+    //     return dp[start] = false;
+    // }
 
     bool wordBreak(string s, vector<string>& wordDict) {
-        st = unordered_set<string>(wordDict.begin(), wordDict.end());
+        unordered_set<string>st(wordDict.begin(), wordDict.end());
+        int n = s.length();
+        vector<bool>dp(n+1, false);
 
-        dp.resize(s.length(), -1);
-
-        return solve(0,s);
+        dp[0] = true;
+        for(int i=0; i<=n; i++) {
+            for(int j=0; j<i; j++) {
+                if(dp[j] && st.count(s.substr(j,i-j))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
     }
 };
