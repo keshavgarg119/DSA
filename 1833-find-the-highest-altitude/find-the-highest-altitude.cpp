@@ -4,7 +4,7 @@ public:
         int sum = gain[0];
         gain[0] = 0;
         int n = gain.size();
-        gain.resize(n+1,-1);
+        gain.resize(n+1,0);
         for(int i=1; i<gain.size(); i++) {
             int temp = gain[i];
             gain[i] = sum;
