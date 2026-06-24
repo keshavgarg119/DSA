@@ -33,7 +33,7 @@ public:
 
         // return open.empty();
 
-        int low = 0, high = 0;
+        int low = 0, high = 0; // lo = min possible open count, hi = max possible open count
 
         for(char ch: s) {
             if(ch=='(') {
@@ -45,13 +45,13 @@ public:
                 high--;
             }
             else {
-                low--;
-                high++;
+                low--; //trear as "("
+                high++; // treat as ")"
             }
 
-            if(high<0) return false;
+            if(high<0) return false; //to many ')' evem in best case
 
-            low = max(low,0);
+            low = max(low,0); // clamp: '*' can act as empty instead of ')'
         }
 
         return low==0;
