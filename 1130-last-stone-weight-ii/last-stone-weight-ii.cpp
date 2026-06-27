@@ -22,31 +22,35 @@ public:
         int total = accumulate(stones.begin(), stones.end(), 0);
 
         // vector<vector<int>>dp(n, vector<int>(total+1, -1));
-        vector<vector<bool>>dp(n, vector<bool>(total+1, false));
+        // vector<vector<bool>>dp(n, vector<bool>(total+1, false));
+        vector<bool>curr(total+1, false), prev(total+1, false);
 
-        for(int i=0; i<n; i++) {
-            dp[i][0] = true;
-        }
+        // for(int i=0; i<n; i++) {
+        //     dp[i][0] = true;
+        // } 
+        prev[0] = true;
         if(stones[0] <= total) {
-            dp[0][stones[0]] = true;
+            prev[stones[0]] = true;
         }
 
         for(int i=1; i<n; i++) {
+            curr[0] = true;
             for(int t=1; t<=total; t++) {
-                bool notTake = dp[i-1][t];
+                bool notTake = prev[t];
 
                 bool take = false;
                 if(stones[i] <= t) {
-                    take = dp[i-1][t-stones[i]];
+                    take = prev[t-stones[i]];
                 }
 
-                dp[i][t] = take || notTake;
+                curr[t] = take || notTake;
             }
+            prev = curr;
         }
 
         int ans = INT_MAX;
         for(int sum = total/2; sum>=0; sum--) {
-            if(dp[n-1][sum]) {
+            if(prev[sum]) {
                 // return total - 2*sum; // divide the stones array in two subsets and checking whether the subset with given sum is possible or not
                 ans = min(ans, total-2*sum);
             }
