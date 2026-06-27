@@ -31,29 +31,31 @@ public:
 
         int req = (total+target)/2;
 
-        vector<vector<int>>dp(n, vector<int>(req+1,0));
+        // vector<vector<int>>dp(n, vector<int>(req+1,0));
+        vector<int>prev(req+1,0), curr(req+1,0);
 
         if (nums[0] == 0)
-            dp[0][0] = 2;
+            prev[0] = 2;
         else
-            dp[0][0] = 1;
+            prev[0] = 1;
 
         if (nums[0] != 0 && nums[0] <= req)
-            dp[0][nums[0]] = 1;
+            prev[nums[0]] = 1;
 
         for (int i = 1; i < n; i++) {
             for (int sum = 0; sum <= req; sum++) {
 
-                int notTake = dp[i - 1][sum];
+                int notTake = prev[sum];
 
                 int take = 0;
                 if (nums[i] <= sum)
-                    take = dp[i - 1][sum - nums[i]];
+                    take = prev[sum - nums[i]];
 
-                dp[i][sum] = take + notTake;
+                curr[sum] = take + notTake;
             }
+            prev = curr;
         }
 
-        return dp[n - 1][req];
+        return prev[req];
     }
 };
