@@ -25,27 +25,33 @@ public:
 
         if(nm != s3.size()) return false;
         // vector<vector<int>>dp(n+1, vector<int>(m+1, -1));
-        vector<vector<bool>>dp(n+1, vector<bool>(m+1, false));
+        // vector<vector<bool>>dp(n+1, vector<bool>(m+1, false));
+        vector<bool>curr(m+1, false), next(m+1, false);
 
-        dp[n][m] = true;
+        next[m] = true;
         for(int i=n; i>=0; i--) {
+            
             for(int j=m; j>=0; j--) {
 
-                if(i==n && j==m) continue;
+                if(i==n && j==m) {
+                    curr[j]=true; 
+                    continue;
+                }
 
                 bool takeFromS1 = false, takeFromS2 = false;
 
                 if(i<s1.size() && s1[i]==s3[i+j]) {
-                    takeFromS1 = dp[i+1][j];
+                    takeFromS1 = next[j];
                 }
                 if(j<s2.size() && s2[j]==s3[i+j]) {
-                    takeFromS2 = dp[i][j+1];
+                    takeFromS2 = curr[j+1];
                 }
 
-                dp[i][j] = takeFromS1 || takeFromS2;
+                curr[j] = takeFromS1 || takeFromS2;
             }
+            next = curr;
         }
 
-        return dp[0][0];
+        return next[0];
     }
 };
