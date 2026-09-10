@@ -11,38 +11,29 @@
  */
 class Solution {
 public:
-    int countNodes(TreeNode* root) {
-        if(root == nullptr) return 0;
+    int ans = 0;
 
-        return 1 + countNodes(root->left) + countNodes(root->right);
-    }
-
-    int sumOfNodes(TreeNode* root) {
-        if(root == nullptr) return 0;
-
-        return root->val + sumOfNodes(root->right) + sumOfNodes(root->left);
-    }
-
-    int averageOfSubtree(TreeNode* root) {
-        
-        if(root == nullptr) {
-            return 0;
+    pair<int, int> dfs(TreeNode* root) {
+        if (root == nullptr) {
+            return {0, 0};
         }
 
-        int ans = 0;
+        auto left = dfs(root->left);
 
-        int count = countNodes(root);
-        int sum = sumOfNodes(root);
+        auto right = dfs(root->right);
 
-        int average = sum / count;
+        int sum = root->val + left.first + right.first;
+        int count = 1 + left.second + right.second;
 
-        if(average == root->val) {
+        if (sum / count == root->val) {
             ans++;
         }
 
-        ans += averageOfSubtree(root->left);
-        ans += averageOfSubtree(root->right);
+        return {sum, count};
+    }
 
+    int averageOfSubtree(TreeNode* root) {
+        dfs(root);
         return ans;
     }
 };
