@@ -11,18 +11,17 @@ public:
                 if(st.empty()) {
                     return false;
                 }
-                if((ch==')' && st.top()!='(' )||
-                   (ch=='}' && st.top()!='{' )||
-                   (ch==']' && st.top()!='[' )
-                ) {
-                    return false;
-                }
-                else {
+                else if(ch==')' && st.top()=='(' ||
+                        ch=='}' && st.top()=='{' ||
+                        ch==']' && st.top()=='[') {
                     st.pop();
                 }
+                else {
+                    return false;
+                }
             }
-        } 
+        }
 
-        return st.empty() ? true: false;
+        return st.empty() ? true : false;
     }
 };
