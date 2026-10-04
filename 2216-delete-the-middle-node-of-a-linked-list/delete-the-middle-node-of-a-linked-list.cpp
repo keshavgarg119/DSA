@@ -26,6 +26,8 @@ public:
         temp->next = slow->next;
 
         delete slow;
+
         return head;
+
     }
 };
